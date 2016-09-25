@@ -84,14 +84,14 @@ lfm.Auth_getMobileSession(function(res) {
 // 	page: 2,
 // 	limit: 5,
 // 	callback: function(res) {
-// 		console.log(res.results.albummatches);
+// 		console.log(res);
 // 	}
 // });
 // 
 // lfm.artist_getCorrection({
 // 	artist: 'Guns and Roses',
 // 	callback: function(res) {
-// 		console.log(res.corrections);
+// 		console.log(res);
 // 	}
 // });
 // 
@@ -115,7 +115,7 @@ lfm.Auth_getMobileSession(function(res) {
 // 	artist: 'Lucy Dacus',
 // 	user: 'Christo27',
 // 	callback: function(res) {
-// 		console.log(res.tags.tag[0]);
+// 		console.log(res);
 // 	}
 // });
 // 
@@ -123,14 +123,14 @@ lfm.Auth_getMobileSession(function(res) {
 // 	artist: 'A Camp',
 // 	limit: 2,
 // 	callback: function(res) {
-// 		console.log(res.topalbums.album);
+// 		console.log(res);
 // 	}
 // });
 // 
 // lfm.artist_getTopTags({
 // 	artist: 'Broken Social Scene',
 // 	callback: function(res) {
-// 		console.log(res.toptags.tag);
+// 		console.log(res);
 // 	}
 // });
 // 
@@ -138,14 +138,51 @@ lfm.Auth_getMobileSession(function(res) {
 // 	artist: 'Shamir',
 // 	limit: 5,
 // 	callback: function(res) {
-// 		console.log(res.toptracks.track);
+// 		console.log(res);
 // 	}
 // });
 //
-lfm.artist_search({
-	artist: 'Stars',
-	limit: 3,
+// lfm.artist_search({
+// 	artist: 'Stars',
+// 	limit: 3,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.chart_getTopArtists({
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.chart_getTopTags({
+// 	limit: 5,
+// 	page: 2,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.chart_getTopTracks({
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.geo_getTopArtists({
+// 	country: 'United States',
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+lfm.geo_getTopTracks({
+	country: 'Spain',
+	limit: 5,
 	callback: function(res) {
-		console.log(res.results.artistmatches);
+		console.log(res);
 	}
 });
