@@ -8,7 +8,7 @@ var lfm = new lastfm({
 	debug: true
 });
 
-lfm.getSessionKey(function(res) {
+lfm.Auth_getMobileSession(function(res) {
 	// opt = {
 	// 	artist: artist, //req
 	// 	album: album, //req
@@ -16,7 +16,7 @@ lfm.getSessionKey(function(res) {
 	// }
 	// console.log(res);
 	// if (res.success) {
-	// 	lfm.addAlbumTags({
+	// 	lfm.Album_addTags({
 	// 		artist: 'Oh Pep!',
 	// 		album: 'Living',
 	// 		tags: 'peppy, folk',
@@ -24,7 +24,7 @@ lfm.getSessionKey(function(res) {
 	// 			console.log("result is: " + res);
 	// 		}
 	// 	});
-	// 	lfm.removeAlbumTags({
+	// 	lfm.Album_removeTag({
 	// 		artist: 'Oh Pep!',
 	// 		album: 'Living',
 	// 		tag: 'peppy',
@@ -35,7 +35,7 @@ lfm.getSessionKey(function(res) {
 	// }
 });
 
-// lfm.getAlbumInfo({
+// lfm.Album_getInfo({
 // 	artist: 'PWR BTTM',
 // 	album: 'Ugly Cherries',
 // 	username: 'Christo27',
@@ -44,16 +44,16 @@ lfm.getSessionKey(function(res) {
 // 	}
 // });
 // 
-// lfm.getAlbumTags({
-// 	artist: 'Pale Honey',
-// 	album: 'Pale Honey',
+// lfm.Album_getTags({
+// 	artist: 'Oh Pep!',
+// 	album: 'Living',
 // 	username: 'Christo27',
 // 	callback: function(res) {
 // 		console.log(res);
 // 	}
 // });
 
-// lfm.getAlbumTopTags({
+// lfm.Album_getTopTags({
 // 	artist: 'Pale Honey',
 // 	album: 'Pale Honey',
 // 	callback: function(res) {
@@ -61,7 +61,7 @@ lfm.getSessionKey(function(res) {
 // 	}
 // });
 // 
-// lfm.findAlbum({
+// lfm.Album_search({
 // 	album: 'Sprinter',
 // 	page: 2,
 // 	limit: 5,
