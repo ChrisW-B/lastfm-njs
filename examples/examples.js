@@ -179,9 +179,70 @@ lfm.Auth_getMobileSession(function(res) {
 // 		console.log(res);
 // 	}
 // });
-lfm.geo_getTopTracks({
-	country: 'Spain',
-	limit: 5,
+// 
+// lfm.geo_getTopTracks({
+// 	country: 'Spain',
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.library_getArtists({
+// 	user: 'Christo27',
+// 	limit: 5,
+// 	page: 2,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.tag_getInfo({
+// 	tag: 'Indie',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.tag_getSimilar({
+// 	tag: 'Baroque Pop',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.tag_getTopAlbums({
+// 	tag: 'Happy',
+// 	limit: 3,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.tag_getTopArtists({
+// 	tag: 'Indie Rock',
+// 	limit: 3,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+//
+// lfm.tag_getTopTags({
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.tag_getTopTracks({
+// 	tag: 'Musical',
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+lfm.tag_getTopTracks({
+	tag: 'Pop',
 	callback: function(res) {
 		console.log(res);
 	}
