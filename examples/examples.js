@@ -8,35 +8,34 @@ var lfm = new lastfm({
 	debug: true
 });
 
-lfm.Auth_getMobileSession(function(res) {
+lfm.auth_getMobileSession(function(res) {
 	// opt = {
 	// 	artist: artist, //req
 	// 	album: album, //req
 	// 	tags: tags, //req, max: 10, comma separated list
 	// }
-	// console.log(res);
 	if (res.success) {
-		// 	lfm.album_addTags({
-		// 		artist: 'Oh Pep!',
-		// 		album: 'Living',
-		// 		tags: 'peppy, folk',
-		// 		callback: function(res) {
-		// 			console.log("result is: " + res);
-		// 		}
-		// 	});
+		// lfm.album_addTags({
+		// 	artist: 'Oh Pep!',
+		// 	album: 'Living',
+		// 	tags: 'peppy,folk',
+		// 	callback: function(res) {
+		// 		console.log("result is: " + res);
+		// 	}
+		// });
 		// 	
-		// 	lfm.album_removeTag({
-		// 		artist: 'Oh Pep!',
-		// 		album: 'Living',
-		// 		tag: 'peppy',
-		// 		callback: function(res) {
-		// 			console.log("done! result is: " + res);
-		// 		}
-		// 	});
-		// 	
+		// lfm.album_removeTag({
+		// 	artist: 'Oh Pep!',
+		// 	album: 'Living',
+		// 	tag: 'peppy',
+		// 	callback: function(res) {
+		// 		console.log("done! result is: " + res);
+		// 	}
+		// });
+		//
 		// lfm.artist_addTags({
 		// 	artist: 'Lucy Dacus',
-		// 	tags: 'strange, buttery',
+		// 	tags: 'folk,dacus',
 		// 	callback: function(res) {
 		// 		console.log("done! result is: " + res);
 		// 	}
@@ -44,12 +43,62 @@ lfm.Auth_getMobileSession(function(res) {
 		// 
 		// lfm.artist_removeTag({
 		// 	artist: 'Lucy Dacus',
-		// 	tag: 'strange',
+		// 	tag: 'test',
 		// 	callback: function(res) {
 		// 		console.log("done! result is: " + res);
 		// 	}
 		// });
 		// 
+		// lfm.track_addTags({
+		// 	artist: 'Bad Bad Hats',
+		// 	track: 'Psychic Reader',
+		// 	tags: 'Indie Pop,Female Vocalist',
+		// 	callback: function(res) {
+		// 		console.log(res);
+		// 	}
+		// });
+		// 
+		// lfm.track_love({
+		// 	track: "My Body's Made of Crushed Little Stars",
+		// 	artist: 'Mitski',
+		// 	callback: function(res) {
+		// 		console.log(res);
+		// 	}
+		// });
+		// 
+		// lfm.track_removeTag({
+		// 	artist: 'Bad Bad Hats',
+		// 	track: 'Psychic Reader',
+		// 	tag: 'female vocalist',
+		// 	callback: function(res) {
+		// 		console.log(res);
+		// 	}
+		// });
+		// 
+		// var now = new Date().getTime();
+		// lfm.track_scrobble({
+		// 	artist: ["Mitski", "Half Waif"],
+		// 	track: ["Happy", "Harvest"],
+		// 	timestamp: [Math.floor(now / 1000), Math.floor(Date.now() / 1000) - 200],
+		// 	callback: function(res) {
+		// 		console.log(res);
+		// 	}
+		// });
+		// 
+		// lfm.track_unlove({
+		// 	track: "My Body's Made of Crushed Little Stars",
+		// 	artist: 'Mitski',
+		// 	callback: function(res) {
+		// 		console.log(res);
+		// 	}
+		// });
+		lfm.track_updateNowPlaying({
+			track: "My Body's Made of Crushed Little Stars",
+			artist: 'Mitski',
+			callback: function(res) {
+				console.log(res);
+			}
+		});
 	}
 });
 
@@ -241,9 +290,61 @@ lfm.Auth_getMobileSession(function(res) {
 // 	}
 // });
 // 
-lfm.tag_getTopTracks({
-	tag: 'Pop',
-	callback: function(res) {
-		console.log(res);
-	}
-});
+// lfm.tag_getTopTracks({
+// 	tag: 'Pop',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+//
+// lfm.track_getCorrection({
+// 	artist: 'Guns and Roses',
+// 	track: 'Mrbrownstone',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// lfm.track_getInfo({
+// 	artist: 'Half Waif',
+// 	track: 'All My Armor',
+// 	username: 'Christo27',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.track_getSimilar({
+// 	artist: 'Cher',
+// 	track: 'Believe',
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+//
+// lfm.track_getTags({
+// 	artist: 'Carly Rae Jepsen',
+// 	track: 'Call Me Maybe',
+// 	user: 'Christo27',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+// lfm.track_getTopTags({
+// 	artist: 'Mitski',
+// 	track: 'Your Best American Girl',
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+//
+// lfm.track_search({
+// 	track: 'Cruel World',
+// 	limit: 5,
+// 	callback: function(res) {
+// 		console.log(res);
+// 	}
+// });
+// 
+//

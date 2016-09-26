@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "request": "*",
-    "request-promise": "*",
+    "request-promise-native": "*",
     "crypto": "*",
     "lodash.merge": "*"
   },
