@@ -1,7 +1,7 @@
 {
   "name": "lastfm-njs",
   "description": "A complete last.fm API for Node.JS",
-  "version": "0.2.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/ChrisW-B/lastfm-njs.git"
