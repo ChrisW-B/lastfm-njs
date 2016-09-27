@@ -5,9 +5,11 @@ The full Last.FM API description can be found [here](http://www.last.fm/api)
 
 You'll need an API key from [Create API Account](http://www.last.fm/api/account/create)
 
+You can install using `npm install --save lastfm-njs`
+
 Then you can set up like so, where username is a default username:
 ```js
-var lastfm = require("../lib");
+var lastfm = require("lastfm-njs");
 var config = require("./config");
 var lfm = new lastfm({
     apiKey: config.key,
