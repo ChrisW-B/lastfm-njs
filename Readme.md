@@ -388,7 +388,7 @@ and callback is a function which receives a single object, containing the Last.F
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ### Tag Methods
-[Examples](../master/examples/Library_examples.js)
+[Examples](../master/examples/library_examples.js)
 
 #### Get Info
 [Last.FM Documentation](http://www.last.fm/api/show/tag.getInfo)
