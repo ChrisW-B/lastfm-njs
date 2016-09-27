@@ -9,17 +9,26 @@
   "author": "Chris Barry <me@chrisb.xyz>",
   "main": "lib/index.js",
   "directories": {
-    "lib": "lib"
+    "example": "examples"
   },
   "engines": {
     "node": "*"
   },
-  "dependencies": {
-    "request": "*",
-    "request-promise-native": "*",
-    "crypto": "*",
-    "lodash.merge": "*"
-  },
   "devDependencies": {},
-  "optionalDependencies": {}
+  "optionalDependencies": {},
+  "bugs": {
+    "url": "https://github.com/ChrisW-B/lastfm-njs/issues"
+  },
+  "homepage": "https://github.com/ChrisW-B/lastfm-njs#readme",
+  "keywords": [
+    "lastfm",
+    "music"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "crypto": "0.0.3",
+    "lodash.merge": "^4.6.0",
+    "request": "^2.75.0",
+    "request-promise-native": "^1.0.3"
+  }
 }
