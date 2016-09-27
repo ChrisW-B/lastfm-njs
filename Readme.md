@@ -64,7 +64,7 @@ or
 ```
 
 ### Album Methods
-[Examples](../blob/master/examples/album_examples.js)
+[Examples](../master/examples/album_examples.js)
 #### Add Tags*
 [Last.FM Documentation](http://www.last.fm/api/show/album.addTags)
 
@@ -155,7 +155,7 @@ _*Requires Authentication_
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ## Artist
-[Examples](../blob/master/examples/artist_examples.js)
+[Examples](../master/examples/artist_examples.js)
 
 #### Add Tags*
 [Last.FM Documentation](http://www.last.fm/api/show/artist.addTags)
@@ -297,7 +297,7 @@ _*Requires Authentication_
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ### Chart Methods
-[Examples](../blob/master/examples/chart_examples.js)
+[Examples](../master/examples/chart_examples.js)
 
 #### Get Top Artists
 [Last.FM Documentation](http://www.last.fm/api/show/chart.getTopArtists)
@@ -339,7 +339,7 @@ and callback is a function which receives a single object, containing the Last.F
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ### Geo Methods
-[Examples](../blob/master/examples/geo_examples.js)
+[Examples](../master/examples/geo_examples.js)
 
 #### Get Top Artists
 [Last.FM Documentation](http://www.last.fm/api/show/geo.getTopArtists)
@@ -370,7 +370,7 @@ and callback is a function which receives a single object, containing the Last.F
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ### Library Methods
-[Examples](../blob/master/examples/library_examples.js)
+[Examples](../master/examples/library_examples.js)
 
 #### Get Artists
 [Last.FM Documentation](http://www.last.fm/api/show/library.getArtists)
@@ -388,7 +388,7 @@ and callback is a function which receives a single object, containing the Last.F
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ### Tag Methods
-[Examples](../blob/master/examples/Library_examples.js)
+[Examples](../master/examples/Library_examples.js)
 
 #### Get Info
 [Last.FM Documentation](http://www.last.fm/api/show/tag.getInfo)
@@ -481,7 +481,7 @@ and callback is a function which receives a single object, containing the Last.F
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
 
 ### Track Methods
-[Examples](../blob/master/examples/track_examples.js)
+[Examples](../master/examples/track_examples.js)
 
 #### Add Tags*
 [Last.FM Documentation](http://www.last.fm/api/show/track.addTags)
@@ -676,7 +676,7 @@ and callback is a function which receives a single object, containing the Last.F
 _*Requires Authentication_
 
 ### User Methods
-[Examples](../blob/master/examples/user_examples.js)
+[Examples](../master/examples/user_examples.js)
 
 #### Get Artist Tracks
 [Last.FM Documentation](http://www.last.fm/api/show/user.getArtistTracks)
