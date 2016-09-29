@@ -8,7 +8,7 @@ var lfm = new lastfm({
 lfm.geo_getTopArtists({
 	country: 'United States',
 	limit: 5,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -16,7 +16,7 @@ lfm.geo_getTopArtists({
 lfm.geo_getTopTracks({
 	country: 'Spain',
 	limit: 5,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });

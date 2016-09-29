@@ -74,7 +74,7 @@ or
         artist: artist, //req
         album: album, //req
         tags: tags, //req, max: 10, comma separated list
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -91,7 +91,7 @@ _*Requires Authentication_
         mbid: mbid, //opt
         lang: lang, //opt
         username: username //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -106,7 +106,7 @@ and callback is a function which receives a single object, containing the Last.F
         album: album, //req unless mbid
         username: username, //req
         mbid: mbid //opt
-        callback: callback
+        callback(res){}
      }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -120,7 +120,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist, //req unless mbid
         album: album, //req unless mbid
         mbid: mbid //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -134,7 +134,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist, //req
         album: album, //req
         tag: tag, //req, single tag to remove
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -149,7 +149,7 @@ _*Requires Authentication_
         album: album, //req
         limit: limit, //opt, defaults to 30
         page: page //opt, defaults to 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -165,7 +165,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         artist: artist //req
         tags: tags, //req, max 10, comma separated
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -178,7 +178,7 @@ _*Requires Authentication_
 ```js
     opt = {
         artist: artist, //req
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -192,7 +192,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist, //req unless mbid
         mbid: mbid, //opt
         username: username, //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -206,7 +206,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist, //req unless mbid
         mbid: mbid, //opt
         limit: limit, //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -220,7 +220,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist, //req unless mbid
         user: username, //req
         mbid: mbid, //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -235,7 +235,7 @@ and callback is a function which receives a single object, containing the Last.F
         mbid: mbid, //opt
         page: page, //opt, default is 50
         limit: limit, //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -248,7 +248,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         artist: artist, //req unless mbid
         mbid: mbid, //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -263,7 +263,7 @@ and callback is a function which receives a single object, containing the Last.F
         mbid: mbid, //opt
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -276,7 +276,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         artist: artist //req
         tag: tag, //req, 1 tag to be removed
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -291,7 +291,7 @@ _*Requires Authentication_
         artist: artist, //req unless mbid
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -307,7 +307,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -320,7 +320,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -333,7 +333,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -350,7 +350,7 @@ and callback is a function which receives a single object, containing the Last.F
         country: country //req, ISO 3166-1 format
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -364,7 +364,7 @@ and callback is a function which receives a single object, containing the Last.F
         country: country //req, ISO 3166-1 format
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -381,7 +381,7 @@ and callback is a function which receives a single object, containing the Last.F
         user: username //req
         page: page //opt, default is 1
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 
 ```
@@ -398,7 +398,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         tag: tag //req
         lang: lang //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -410,7 +410,7 @@ and callback is a function which receives a single object, containing the Last.F
 ```js
     opt = {
         tag: tag //req
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -424,7 +424,7 @@ and callback is a function which receives a single object, containing the Last.F
         tag: tag //req
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -438,7 +438,7 @@ and callback is a function which receives a single object, containing the Last.F
         tag: tag //req
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -449,7 +449,7 @@ and callback is a function which receives a single object, containing the Last.F
 `tag_getTopTags(opt)`, where
 ```js
     opt = {
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -463,7 +463,7 @@ and callback is a function which receives a single object, containing the Last.F
         tag: tag //req
         limit: limit //opt, defaults to 50
         page: page //opt, defaults to 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -475,7 +475,7 @@ and callback is a function which receives a single object, containing the Last.F
 ```js
     opt = {
         tag: tag //req
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -492,7 +492,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist //req
         track: track //req
         tags: tags //req, max: 10
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -506,7 +506,7 @@ _*Requires Authentication_
     opt = {
         artist: artist, //req
         track: track //req
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -535,7 +535,7 @@ and callback is a function which receives a single object, containing the Last.F
         track: track, //req unless mbid
         mbid: mbid, //opt
         limit: limit, //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -550,7 +550,7 @@ and callback is a function which receives a single object, containing the Last.F
         track: track, //req unless mbid
         username: username, //req
         mbid: mbid //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -564,7 +564,7 @@ and callback is a function which receives a single object, containing the Last.F
         artist: artist, //req unless mbid
         track: track, //req unless mbid
         mbid: mbid //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -577,7 +577,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         artist: artist, //req unless mbid
         track: track, //req unless mbid
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -593,7 +593,7 @@ _*Requires Authentication_
         artist: artist, //req
         track: track, //req
         tag: tag, //req, single tag to remove
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -617,7 +617,7 @@ _*Requires Authentication_
         mbid: mbid[i] //opt
         albumArtist: albumArtist[i] //opt
         duration: duration[i] //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -634,7 +634,7 @@ _*Requires Authentication_
         artist: artist, //opt
         limit: limit, //opt, defaults to 30
         page: page //opt, defaults to 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -647,7 +647,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         track: track, //req
         artist: artist, //req
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -668,7 +668,7 @@ _*Requires Authentication_
         mbid: mbid //opt
         albumArtist: albumArtist //opt
         duration: duration //opt
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -689,7 +689,7 @@ _*Requires Authentication_
         startTimestamp: startTimestamp //opt defaults to all time
         page: page //opt, default is 1
         endTimestamp: endTimestamp //opt defaults to all time
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -704,7 +704,7 @@ and callback is a function which receives a single object, containing the Last.F
         recentTracks: recentTracks //opt, true|false
         limit: limit //opt defaults to 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -716,7 +716,7 @@ and callback is a function which receives a single object, containing the Last.F
 ```js
     opt = {
         user: username //opt, defaults to init user
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -730,7 +730,7 @@ and callback is a function which receives a single object, containing the Last.F
         user: username //req
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -746,7 +746,7 @@ and callback is a function which receives a single object, containing the Last.F
         taggingtype: artist|album|track //req
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -763,7 +763,7 @@ and callback is a function which receives a single object, containing the Last.F
         to: endTime //opt
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -778,7 +778,7 @@ and callback is a function which receives a single object, containing the Last.F
         period: overall|7day|1month|3month|6month|12month //opt, default is overall
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -793,7 +793,7 @@ and callback is a function which receives a single object, containing the Last.F
         period: overall|7day|1month|3month|6month|12month //opt, default is overall
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -806,7 +806,7 @@ and callback is a function which receives a single object, containing the Last.F
     opt = {
         user: username //req
         limit: limit //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -821,7 +821,7 @@ and callback is a function which receives a single object, containing the Last.F
         period: overall|7day|1month|3month|6month|12month //opt, default is overall
         limit: limit //opt, default is 50
         page: page //opt, default is 1
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -835,7 +835,7 @@ and callback is a function which receives a single object, containing the Last.F
         user: username //req
         from: startdate //opt, default is overall
         to: enddate //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -849,7 +849,7 @@ and callback is a function which receives a single object, containing the Last.F
         user: username //req
         from: startdate //opt, default is overall
         to: enddate //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -861,7 +861,7 @@ and callback is a function which receives a single object, containing the Last.F
 ```js
     opt = {
         user: username //req
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error
@@ -875,7 +875,7 @@ and callback is a function which receives a single object, containing the Last.F
         user: username //req
         from: startdate //opt, default is overall
         to: enddate //opt, default is 50
-        callback: callback
+        callback(res){}
     }
 ```
 and callback is a function which receives a single object, containing the Last.FM response and `success: false` if there was an error

@@ -8,14 +8,14 @@ var lfm = new lastfm({
 
 lfm.tag_getInfo({
 	tag: 'Indie',
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
 
 lfm.tag_getSimilar({
 	tag: 'Baroque Pop',
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -23,7 +23,7 @@ lfm.tag_getSimilar({
 lfm.tag_getTopAlbums({
 	tag: 'Happy',
 	limit: 3,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -31,13 +31,13 @@ lfm.tag_getTopAlbums({
 lfm.tag_getTopArtists({
 	tag: 'Indie Rock',
 	limit: 3,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
 
 lfm.tag_getTopTags({
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -45,14 +45,14 @@ lfm.tag_getTopTags({
 lfm.tag_getTopTracks({
 	tag: 'Musical',
 	limit: 5,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
 
 lfm.tag_getTopTracks({
 	tag: 'Pop',
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });

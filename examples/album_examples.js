@@ -13,7 +13,7 @@ lfm.auth_getMobileSession(function(res) {
 			artist: 'Oh Pep!',
 			album: 'Living',
 			tags: 'peppy,folk',
-			callback: function(res) {
+			callback(res) {
 				console.log("result is: " + res);
 			}
 		});
@@ -22,7 +22,7 @@ lfm.auth_getMobileSession(function(res) {
 			artist: 'Oh Pep!',
 			album: 'Living',
 			tag: 'peppy',
-			callback: function(res) {
+			callback(res) {
 				console.log("done! result is: " + res);
 			}
 		});
@@ -33,7 +33,7 @@ lfm.album_getInfo({
 	artist: 'PWR BTTM',
 	album: 'Ugly Cherries',
 	username: 'Christo27',
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -42,7 +42,7 @@ lfm.album_getTags({
 	artist: 'Oh Pep!',
 	album: 'Living',
 	username: 'Christo27',
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -50,7 +50,7 @@ lfm.album_getTags({
 lfm.album_getTopTags({
 	artist: 'Pale Honey',
 	album: 'Pale Honey',
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -59,7 +59,7 @@ lfm.album_search({
 	album: 'Sprinter',
 	page: 2,
 	limit: 5,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });

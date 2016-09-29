@@ -9,7 +9,7 @@ lfm.library_getArtists({
 	user: 'Christo27',
 	limit: 5,
 	page: 2,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });

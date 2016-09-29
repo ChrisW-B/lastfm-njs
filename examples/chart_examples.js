@@ -8,7 +8,7 @@ var lfm = new lastfm({
 
 lfm.chart_getTopArtists({
 	limit: 5,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
@@ -16,14 +16,14 @@ lfm.chart_getTopArtists({
 lfm.chart_getTopTags({
 	limit: 5,
 	page: 2,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
 
 lfm.chart_getTopTracks({
 	limit: 5,
-	callback: function(res) {
+	callback(res) {
 		console.log(res);
 	}
 });
