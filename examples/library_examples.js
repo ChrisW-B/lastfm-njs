@@ -5,6 +5,14 @@ var lfm = new lastfm({
 	apiSecret: config.secret,
 	username: config.username
 });
+
+var printRes = function(res) {
+	console.log(res);
+};
+var printError = function(error) {
+	console.error("ERROR: " + JSON.stringify(error));
+};
+
 lfm.library_getArtists({
 	user: 'Christo27',
 	limit: 5,
@@ -13,3 +21,7 @@ lfm.library_getArtists({
 		console.log(res);
 	}
 });
+
+lfm.library_getArtists({
+	user: 'Christo27'
+}).then(printRes, printError);
