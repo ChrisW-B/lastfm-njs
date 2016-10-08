@@ -7,13 +7,19 @@ var lfm = new lastfm({
 	password: config.password
 });
 
+var printRes = function(res) {
+	console.log(res);
+};
+var printError = function(error) {
+	console.error("ERROR: " + JSON.stringify(error));
+};
 
 lfm.auth_getMobileSession(function(res) {
 	if (res.success) {
 		lfm.track_addTags({
 			artist: 'Bad Bad Hats',
 			track: 'Psychic Reader',
-			tags: 'Indie Pop,Female Vocalist',
+			tags: 'Indie Pop,Female Vocalist,music',
 			callback(res) {
 				console.log(res);
 			}
@@ -30,7 +36,7 @@ lfm.auth_getMobileSession(function(res) {
 		lfm.track_removeTag({
 			artist: 'Bad Bad Hats',
 			track: 'Psychic Reader',
-			tag: 'female vocalist',
+			tag: 'test2',
 			callback(res) {
 				console.log(res);
 			}
@@ -63,6 +69,43 @@ lfm.auth_getMobileSession(function(res) {
 	}
 });
 
+lfm.auth_getMobileSession().then(
+	function() {
+		lfm.track_addTags({
+			artist: 'Bad Bad Hats',
+			track: 'Psychic Reader',
+			tags: 'test2,test3'
+		}).then(printRes).catch(printError);
+
+		lfm.track_love({
+			track: 'Juicy',
+			artist: 'Radiation City'
+		}).then(printRes, printError);
+
+		lfm.track_removeTag({
+			artist: 'Bad Bad Hats',
+			track: 'Psychic Reader',
+			tag: 'test3'
+		}).then(printRes, printError);
+
+		var now = new Date().getTime();
+		lfm.track_scrobble({
+			artist: ["Mitski", "Half Waif"],
+			track: ["Happy", "Harvest"],
+			timestamp: [Math.floor(now / 1000), Math.floor(Date.now() / 1000) - 200]
+		}).then(printRes, printError);
+
+		lfm.track_unlove({
+			track: 'Juicy',
+			artist: 'Radiation City'
+		}).then(printRes).catch(printError);
+
+		lfm.track_updateNowPlaying({
+			track: "Juicy",
+			artist: 'Radiation City'
+		}).then(printRes, printError);
+	}).catch(printError);
+
 lfm.track_getCorrection({
 	artist: 'Guns and Roses',
 	track: 'Mrbrownstone',
@@ -70,6 +113,12 @@ lfm.track_getCorrection({
 		console.log(res);
 	}
 });
+
+lfm.track_getCorrection({
+	artist: 'Guns and Roses',
+	track: 'Mrbrownstone'
+}).then(printRes).catch(printError);
+
 lfm.track_getInfo({
 	artist: 'Half Waif',
 	track: 'All My Armor',
@@ -78,6 +127,12 @@ lfm.track_getInfo({
 		console.log(res);
 	}
 });
+
+lfm.track_getInfo({
+	artist: 'Half Waif',
+	track: 'All My Armor',
+	username: 'Christo27'
+}).then(printRes).catch(printError);
 
 lfm.track_getSimilar({
 	artist: 'Cher',
@@ -88,14 +143,26 @@ lfm.track_getSimilar({
 	}
 });
 
+lfm.track_getSimilar({
+	artist: 'Cher',
+	track: 'Believe',
+	limit: 5
+}).then(printRes).catch(printError);
+
 lfm.track_getTags({
-	artist: 'Carly Rae Jepsen',
-	track: 'Call Me Maybe',
+	artist: 'Bad Bad Hats',
+	track: 'Psychic Reader',
 	user: 'Christo27',
 	callback(res) {
 		console.log(res);
 	}
 });
+
+lfm.track_getTags({
+	artist: 'Bad Bad Hats',
+	track: 'Psychic Reader',
+	user: 'Christo27'
+}).then(printRes, printError);
 
 lfm.track_getTopTags({
 	artist: 'Mitski',
@@ -105,6 +172,11 @@ lfm.track_getTopTags({
 	}
 });
 
+lfm.track_getTopTags({
+	artist: 'Mitski',
+	track: 'Your Best American Girl'
+}).then(printRes).catch(printError);
+
 lfm.track_search({
 	track: 'Cruel World',
 	limit: 5,
@@ -112,3 +184,8 @@ lfm.track_search({
 		console.log(res);
 	}
 });
+
+lfm.track_search({
+	track: 'Cruel World',
+	limit: 5
+}).then(printRes).catch(printError);

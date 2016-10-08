@@ -7,12 +7,19 @@ var lfm = new lastfm({
 	password: config.password
 });
 
+var printRes = function(res) {
+	console.log(res);
+};
+var printError = function(error) {
+	console.error("ERROR: " + JSON.stringify(error));
+};
+
 lfm.auth_getMobileSession(function(res) {
 	if (res.success) {
 		lfm.album_addTags({
 			artist: 'Oh Pep!',
 			album: 'Living',
-			tags: 'peppy,folk',
+			tags: 'peppy,folk,music',
 			callback(res) {
 				console.log("result is: " + res);
 			}
@@ -29,6 +36,22 @@ lfm.auth_getMobileSession(function(res) {
 	}
 });
 
+lfm.auth_getMobileSession().then(function(result) {
+	lfm.album_addTags({
+		artist: 'Oh Pep!',
+		album: 'Living',
+		tags: 'oh pep!,peppy,music'
+	}).then(printRes).catch(printError);
+
+	lfm.album_removeTag({
+		artist: 'Oh Pep!',
+		album: 'Living',
+		tag: 'music'
+	}).then(printRes).catch(printError);
+}).catch(printError);
+
+
+
 lfm.album_getInfo({
 	artist: 'PWR BTTM',
 	album: 'Ugly Cherries',
@@ -37,6 +60,14 @@ lfm.album_getInfo({
 		console.log(res);
 	}
 });
+
+lfm.album_getInfo({
+		artist: 'PWR BTTM',
+		album: 'Ugly Cherries',
+		username: 'Christo27'
+	})
+	.then(printRes)
+	.catch(printError);
 
 lfm.album_getTags({
 	artist: 'Oh Pep!',
@@ -47,6 +78,12 @@ lfm.album_getTags({
 	}
 });
 
+lfm.album_getInfo({
+	artist: 'Oh Pep!',
+	album: 'Living',
+	username: 'Christo27'
+}).then(printRes).catch(printError);
+
 lfm.album_getTopTags({
 	artist: 'Pale Honey',
 	album: 'Pale Honey',
@@ -54,6 +91,11 @@ lfm.album_getTopTags({
 		console.log(res);
 	}
 });
+
+lfm.album_getTopTags({
+	artist: 'Pale Honey',
+	album: 'Pale Honey'
+}).then(printRes).catch(printError);
 
 lfm.album_search({
 	album: 'Sprinter',
@@ -63,3 +105,9 @@ lfm.album_search({
 		console.log(res);
 	}
 });
+
+lfm.album_search({
+	album: 'Sprinter',
+	page: 2,
+	limit: 5
+}).then(printRes).catch(printError);
