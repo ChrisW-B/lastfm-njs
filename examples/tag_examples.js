@@ -6,6 +6,13 @@ var lfm = new lastfm({
 	username: config.username
 });
 
+var printRes = function(res) {
+	console.log(res);
+};
+var printError = function(error) {
+	console.error("ERROR: " + JSON.stringify(error));
+};
+
 lfm.tag_getInfo({
 	tag: 'Indie',
 	callback(res) {
@@ -13,12 +20,20 @@ lfm.tag_getInfo({
 	}
 });
 
+lfm.tag_getInfo({
+	tag: 'Indie'
+}).then(printRes, printError);
+
 lfm.tag_getSimilar({
 	tag: 'Baroque Pop',
 	callback(res) {
 		console.log(res);
 	}
 });
+
+lfm.tag_getSimilar({
+	tag: 'Pop'
+}).then(printRes, printError);
 
 lfm.tag_getTopAlbums({
 	tag: 'Happy',
@@ -28,6 +43,11 @@ lfm.tag_getTopAlbums({
 	}
 });
 
+lfm.tag_getTopAlbums({
+	tag: 'Happy',
+	limit: 3
+}).then(printRes).catch(printError);
+
 lfm.tag_getTopArtists({
 	tag: 'Indie Rock',
 	limit: 3,
@@ -36,11 +56,20 @@ lfm.tag_getTopArtists({
 	}
 });
 
+lfm.tag_getTopArtists({
+	tag: 'Baroque Pop',
+	limit: 3
+}).then(printRes, printError);
+
 lfm.tag_getTopTags({
 	callback(res) {
 		console.log(res);
 	}
 });
+
+lfm.tag_getTopTags()
+	.then(printRes)
+	.catch(printError);
 
 lfm.tag_getTopTracks({
 	tag: 'Musical',
@@ -51,8 +80,21 @@ lfm.tag_getTopTracks({
 });
 
 lfm.tag_getTopTracks({
-	tag: 'Pop',
+		tag: 'musical',
+		limit: 5
+	})
+	.then(printRes)
+	.catch(printError);
+
+lfm.tag_getWeeklyChartList({
+	tag: 'Baroque Pop',
 	callback(res) {
 		console.log(res);
 	}
 });
+
+lfm.tag_getWeeklyChartList({
+		tag: 'Baroque Pop'
+	})
+	.then(printRes)
+	.catch(printError);
