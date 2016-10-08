@@ -5,6 +5,14 @@ var lfm = new lastfm({
 	apiSecret: config.secret,
 	username: config.username
 });
+
+var printRes = function(res) {
+	console.log(res);
+};
+var printError = function(error) {
+	console.error("ERROR: " + JSON.stringify(error));
+};
+
 lfm.geo_getTopArtists({
 	country: 'United States',
 	limit: 5,
@@ -13,6 +21,11 @@ lfm.geo_getTopArtists({
 	}
 });
 
+lfm.geo_getTopArtists({
+	country: 'United States',
+	limit: 5
+}).then(printRes).catch(printError);
+
 lfm.geo_getTopTracks({
 	country: 'Spain',
 	limit: 5,
@@ -20,3 +33,8 @@ lfm.geo_getTopTracks({
 		console.log(res);
 	}
 });
+
+lfm.geo_getTopTracks({
+	country: 'Spain',
+	limit: 5
+}).then(printRes, printError);
