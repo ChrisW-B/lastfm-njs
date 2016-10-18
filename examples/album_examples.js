@@ -1,27 +1,27 @@
-var lastfm = require("../lib");
-var config = require("./config");
-var lfm = new lastfm({
+const lastfm = require('../lib');
+const config = require('./config');
+const lfm = new lastfm({
 	apiKey: config.key,
 	apiSecret: config.secret,
 	username: config.username,
 	password: config.password
 });
 
-var printRes = function(res) {
+const printRes = function(res) {
 	console.log(res);
 };
-var printError = function(error) {
-	console.error("ERROR: " + JSON.stringify(error));
+const printError = function(error) {
+	console.error('ERROR: ' + JSON.stringify(error));
 };
 
-lfm.auth_getMobileSession(function(res) {
+lfm.auth_getMobileSession((res) => {
 	if (res.success) {
 		lfm.album_addTags({
 			artist: 'Oh Pep!',
 			album: 'Living',
 			tags: 'peppy,folk,music',
 			callback(res) {
-				console.log("result is: " + res);
+				console.log('result is: ' + res);
 			}
 		});
 
@@ -30,13 +30,13 @@ lfm.auth_getMobileSession(function(res) {
 			album: 'Living',
 			tag: 'peppy',
 			callback(res) {
-				console.log("done! result is: " + res);
+				console.log('done! result is: ' + res);
 			}
 		});
 	}
 });
 
-lfm.auth_getMobileSession().then(function(result) {
+lfm.auth_getMobileSession().then(() => {
 	lfm.album_addTags({
 		artist: 'Oh Pep!',
 		album: 'Living',
@@ -50,8 +50,6 @@ lfm.auth_getMobileSession().then(function(result) {
 	}).then(printRes).catch(printError);
 }).catch(printError);
 
-
-
 lfm.album_getInfo({
 	artist: 'PWR BTTM',
 	album: 'Ugly Cherries',
@@ -60,14 +58,11 @@ lfm.album_getInfo({
 		console.log(res);
 	}
 });
-
 lfm.album_getInfo({
-		artist: 'PWR BTTM',
-		album: 'Ugly Cherries',
-		username: 'Christo27'
-	})
-	.then(printRes)
-	.catch(printError);
+	artist: 'PWR BTTM',
+	album: 'Ugly Cherries',
+	username: 'Christo27'
+}).then(printRes).catch(printError);
 
 lfm.album_getTags({
 	artist: 'Oh Pep!',
@@ -77,7 +72,6 @@ lfm.album_getTags({
 		console.log(res);
 	}
 });
-
 lfm.album_getInfo({
 	artist: 'Oh Pep!',
 	album: 'Living',

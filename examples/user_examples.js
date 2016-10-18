@@ -1,20 +1,20 @@
-var lastfm = require("../lib");
-var config = require("./config");
-var lfm = new lastfm({
+const lastfm = require('../lib');
+const config = require('./config');
+const lfm = new lastfm({
 	apiKey: config.key,
 	apiSecret: config.secret,
 	username: config.username
 });
 
-var printRes = function(res) {
+const printRes = function(res) {
 	console.log(res);
 };
-var printError = function(error) {
-	console.error("ERROR: " + JSON.stringify(error));
+const printError = function(error) {
+	console.error('ERROR: ' + JSON.stringify(error));
 };
 
 lfm.user_getArtistTracks({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	artist: 'Sylvan Esso',
 	callback(res) {
 		console.log(res);
@@ -22,12 +22,12 @@ lfm.user_getArtistTracks({
 });
 
 lfm.user_getArtistTracks({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	artist: 'Sylvan Esso'
 }).then(printRes, printError);
 
 lfm.user_getFriends({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	recenttracks: true,
 	callback(res) {
 		console.log(res);
@@ -35,12 +35,12 @@ lfm.user_getFriends({
 });
 
 lfm.user_getFriends({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	recenttracks: true
 }).then(printRes, printError);
 
 lfm.user_getInfo({
-	// user: 'Christo27', //defaults to authenticated user
+	// user: 'Christo27', //defaults to authenticated user, //defaults to authenticated user
 	callback(res) {
 		console.log(res);
 	}
@@ -49,7 +49,7 @@ lfm.user_getInfo({
 lfm.user_getInfo().then(printRes).catch(printError);
 
 lfm.user_getLovedTracks({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	limit: 5,
 	callback(res) {
 		console.log(res);
@@ -59,7 +59,7 @@ lfm.user_getLovedTracks({
 lfm.user_getLovedTracks().then(printRes).catch(printError);
 
 lfm.user_getPersonalTags({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	tag: 'folk',
 	taggingtype: 'artist',
 	callback(res) {
@@ -68,13 +68,13 @@ lfm.user_getPersonalTags({
 });
 
 lfm.user_getPersonalTags({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	tag: 'folk',
 	taggingtype: 'artist'
 }).then(printRes, printError);
 
 lfm.user_getRecentTracks({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	limit: 5,
 	callback(res) {
 		console.log(res);
@@ -82,12 +82,12 @@ lfm.user_getRecentTracks({
 });
 
 lfm.user_getRecentTracks({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	limit: 5
 }).then(printRes, printError);
 
 lfm.user_getTopAlbums({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	period: '1month',
 	limit: 5,
 	callback(res) {
@@ -100,7 +100,7 @@ lfm.user_getTopAlbums({
 }).then(printRes, printError);
 
 lfm.user_getTopArtists({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	period: '1month',
 	limit: 5,
 	callback(res) {
@@ -111,7 +111,7 @@ lfm.user_getTopArtists({
 lfm.user_getTopArtists().then(printRes).catch(printError);
 
 lfm.user_getTopTags({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	limit: 5,
 	callback(res) {
 		console.log(res);
@@ -122,7 +122,7 @@ lfm.user_getTopTags({
 	limit: 2
 }).then(printRes, printError);
 lfm.user_getTopTracks({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	period: '1month',
 	limit: 5,
 	callback(res) {
@@ -141,7 +141,7 @@ lfm.user_getWeeklyAlbumChart({
 lfm.user_getWeeklyAlbumChart().then(printRes, printError);
 
 lfm.user_getWeeklyArtistChart({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	callback(res) {
 		console.log(res);
 	}
@@ -150,7 +150,7 @@ lfm.user_getWeeklyArtistChart({
 lfm.user_getWeeklyArtistChart().then(printRes, printError);
 
 lfm.user_getWeeklyChartList({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	callback(res) {
 		console.log(res);
 	}
@@ -159,7 +159,7 @@ lfm.user_getWeeklyChartList({
 lfm.user_getWeeklyChartList().then(printRes, printError);
 
 lfm.user_getWeeklyTrackChart({
-	user: 'Christo27',
+	// user: 'Christo27', //defaults to authenticated user,
 	callback(res) {
 		console.log(res);
 	}

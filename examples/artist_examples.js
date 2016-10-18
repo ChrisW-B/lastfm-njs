@@ -1,17 +1,17 @@
-var lastfm = require("../lib");
-var config = require("./config");
-var lfm = new lastfm({
+const lastfm = require('../lib');
+const config = require('./config');
+const lfm = new lastfm({
 	apiKey: config.key,
 	apiSecret: config.secret,
 	username: config.username,
 	password: config.password
 });
 
-var printRes = function(res) {
+const printRes = function(res) {
 	console.log(res);
 };
-var printError = function(error) {
-	console.error("ERROR: " + JSON.stringify(error));
+const printError = function(error) {
+	console.error('ERROR: ' + JSON.stringify(error));
 };
 
 lfm.auth_getMobileSession(function(res) {
@@ -20,14 +20,14 @@ lfm.auth_getMobileSession(function(res) {
 			artist: 'Lucy Dacus',
 			tags: 'folk,dacus,music',
 			callback(res) {
-				console.log("done! result is: " + JSON.stringify(res));
+				console.log('done! result is: ' + JSON.stringify(res));
 			}
 		});
 		lfm.artist_removeTag({
 			artist: 'Lucy Dacus',
 			tag: 'dacus',
 			callback(res) {
-				console.log("done! result is: " + res);
+				console.log('done! result is: ' + res);
 			}
 		});
 	}

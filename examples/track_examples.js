@@ -1,17 +1,17 @@
-var lastfm = require("../lib");
-var config = require("./config");
-var lfm = new lastfm({
+const lastfm = require('../lib');
+const config = require('./config');
+const lfm = new lastfm({
 	apiKey: config.key,
 	apiSecret: config.secret,
 	username: config.username,
 	password: config.password
 });
 
-var printRes = function(res) {
+const printRes = function(res) {
 	console.log(res);
 };
-var printError = function(error) {
-	console.error("ERROR: " + JSON.stringify(error));
+const printError = function(error) {
+	console.error('ERROR: ' + JSON.stringify(error));
 };
 
 lfm.auth_getMobileSession(function(res) {
@@ -26,7 +26,7 @@ lfm.auth_getMobileSession(function(res) {
 		});
 
 		lfm.track_love({
-			track: "My Body's Made of Crushed Little Stars",
+			track: 'My Body\'s Made of Crushed Little Stars',
 			artist: 'Mitski',
 			callback(res) {
 				console.log(res);
@@ -42,10 +42,10 @@ lfm.auth_getMobileSession(function(res) {
 			}
 		});
 
-		var now = new Date().getTime();
+		const now = new Date().getTime();
 		lfm.track_scrobble({
-			artist: ["Mitski", "Half Waif"],
-			track: ["Happy", "Harvest"],
+			artist: ['Mitski', 'Half Waif'],
+			track: ['Happy', 'Harvest'],
 			timestamp: [Math.floor(now / 1000), Math.floor(Date.now() / 1000) - 200],
 			callback(res) {
 				console.log(res);
@@ -53,14 +53,14 @@ lfm.auth_getMobileSession(function(res) {
 		});
 
 		lfm.track_unlove({
-			track: "My Body's Made of Crushed Little Stars",
+			track: 'My Body\'s Made of Crushed Little Stars',
 			artist: 'Mitski',
 			callback(res) {
 				console.log(res);
 			}
 		});
 		lfm.track_updateNowPlaying({
-			track: "My Body's Made of Crushed Little Stars",
+			track: 'My Body\'s Made of Crushed Little Stars',
 			artist: 'Mitski',
 			callback(res) {
 				console.log(res);
@@ -88,10 +88,10 @@ lfm.auth_getMobileSession().then(
 			tag: 'test3'
 		}).then(printRes, printError);
 
-		var now = new Date().getTime();
+		const now = new Date().getTime();
 		lfm.track_scrobble({
-			artist: ["Mitski", "Half Waif"],
-			track: ["Happy", "Harvest"],
+			artist: ['Mitski', 'Half Waif'],
+			track: ['Happy', 'Harvest'],
 			timestamp: [Math.floor(now / 1000), Math.floor(Date.now() / 1000) - 200]
 		}).then(printRes, printError);
 
@@ -101,7 +101,7 @@ lfm.auth_getMobileSession().then(
 		}).then(printRes).catch(printError);
 
 		lfm.track_updateNowPlaying({
-			track: "Juicy",
+			track: 'Juicy',
 			artist: 'Radiation City'
 		}).then(printRes, printError);
 	}).catch(printError);

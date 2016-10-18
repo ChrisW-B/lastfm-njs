@@ -1,16 +1,16 @@
-var lastfm = require("../lib");
-var config = require("./config");
-var lfm = new lastfm({
+const lastfm = require('../lib');
+const config = require('./config');
+const lfm = new lastfm({
 	apiKey: config.key,
 	apiSecret: config.secret,
 	username: config.username
 });
 
-var printRes = function(res) {
+const printRes = function(res) {
 	console.log(res);
 };
-var printError = function(error) {
-	console.error("ERROR: " + JSON.stringify(error));
+const printError = function(error) {
+	console.error('ERROR: ' + JSON.stringify(error));
 };
 
 lfm.tag_getInfo({
@@ -80,11 +80,9 @@ lfm.tag_getTopTracks({
 });
 
 lfm.tag_getTopTracks({
-		tag: 'musical',
-		limit: 5
-	})
-	.then(printRes)
-	.catch(printError);
+	tag: 'musical',
+	limit: 5
+}).then(printRes).catch(printError);
 
 lfm.tag_getWeeklyChartList({
 	tag: 'Baroque Pop',
@@ -94,7 +92,5 @@ lfm.tag_getWeeklyChartList({
 });
 
 lfm.tag_getWeeklyChartList({
-		tag: 'Baroque Pop'
-	})
-	.then(printRes)
-	.catch(printError);
+	tag: 'Baroque Pop'
+}).then(printRes).catch(printError);

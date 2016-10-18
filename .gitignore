@@ -1,5 +1,5 @@
 node_modules
 config.js
 .jshintrc
-
 npm-debug.log
+.eslintrc.json
