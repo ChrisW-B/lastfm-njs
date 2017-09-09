@@ -1,7 +1,7 @@
 {
   "name": "lastfm-njs",
   "description": "A complete last.fm API for Node.JS",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "repository": {
     "type": "git",
     "url": "git://github.com/ChrisW-B/lastfm-njs.git"
@@ -14,7 +14,12 @@
   "engines": {
     "node": "*"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "5.1"
+  },
   "optionalDependencies": {},
   "bugs": {
     "url": "https://github.com/ChrisW-B/lastfm-njs/issues"
@@ -26,9 +31,6 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "crypto": "0.0.3",
-    "lodash.merge": "^4.6.0",
-    "request": "^2.75.0",
     "request-promise-native": "^1.0.3"
   }
 }

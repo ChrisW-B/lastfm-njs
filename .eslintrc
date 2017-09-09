@@ -1,0 +1,18 @@
+{
+  "extends": ["eslint:recommended", "airbnb-base"],
+  "parserOptions": {
+    "ecmaVersion": 6
+  },
+  "rules": {
+    "strict": 0,
+    "quotes": [1, "single"],
+    "comma-dangle": [2, "never"],
+    "eol-last": [1, "never"],
+    "no-plusplus": [0],
+    "no-console": ["warn"],
+    "no-underscore-dangle": [0],
+    "func-names": [0],
+    "prefer-promise-reject-errors": [0],
+    "camelcase": [0]
+  }
+}
