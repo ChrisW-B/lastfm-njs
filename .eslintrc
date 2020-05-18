@@ -1,18 +1,41 @@
 {
-  "extends": ["eslint:recommended", "airbnb-base"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "import"],
+  "extends": [
+    "airbnb-base",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:prettier/recommended"
+  ],
   "parserOptions": {
-    "ecmaVersion": 6
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "env": {
+    "jest": true,
+    "es6": true,
+    "commonjs": true,
+    "node": true
+  },
+  "settings": {
+    "react": { "version": "detect" },
+    "import/parsers": { "@typescript-eslint/parser": [".ts", ".tsx"] },
+    "import/resolver": { "typescript": { "alwaysTryTypes": true } }
   },
   "rules": {
-    "strict": 0,
-    "quotes": [1, "single"],
-    "comma-dangle": [2, "never"],
-    "eol-last": [1, "never"],
-    "no-plusplus": [0],
-    "no-console": ["warn"],
-    "no-underscore-dangle": [0],
-    "func-names": [0],
-    "prefer-promise-reject-errors": [0],
-    "camelcase": [0]
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-this-alias": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "import/extensions": ["error", { "ts": "never", "json": "always" }],
+    "import/no-unresolved": "error",
+    "lines-between-class-members": "off",
+    "no-dupe-class-members": "off",
+    "no-nested-ternary": "off",
+    "no-underscore-dangle": "off",
+    "prefer-promise-reject-errors": "off",
+    "no-prototype-builtins": "off"
   }
 }
