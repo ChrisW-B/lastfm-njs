@@ -7,10 +7,10 @@ const lfm = new LastFm({
   username: config.username,
 });
 
-const printRes = function(res) {
+const printRes = function (res) {
   console.log(res);
 };
-const printError = function(error) {
+const printError = function (error) {
   console.error(`ERROR: ${JSON.stringify(error)}`);
 };
 
@@ -51,10 +51,7 @@ lfm.user_getInfo({
   },
 });
 
-lfm
-  .user_getInfo()
-  .then(printRes)
-  .catch(printError);
+lfm.user_getInfo().then(printRes).catch(printError);
 
 lfm.user_getLovedTracks({
   // user: 'Christo27', //defaults to authenticated user,
@@ -64,10 +61,7 @@ lfm.user_getLovedTracks({
   },
 });
 
-lfm
-  .user_getLovedTracks()
-  .then(printRes)
-  .catch(printError);
+lfm.user_getLovedTracks().then(printRes).catch(printError);
 
 lfm.user_getPersonalTags({
   // user: 'Christo27', //defaults to authenticated user,
@@ -125,10 +119,7 @@ lfm.user_getTopArtists({
   },
 });
 
-lfm
-  .user_getTopArtists()
-  .then(printRes)
-  .catch(printError);
+lfm.user_getTopArtists().then(printRes).catch(printError);
 
 lfm.user_getTopTags({
   // user: 'Christo27', //defaults to authenticated user,

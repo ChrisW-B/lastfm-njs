@@ -7,10 +7,10 @@ const lfm = new LastFm({
   username: config.username,
 });
 
-const printRes = function(res) {
+const printRes = function (res) {
   console.log(res);
 };
-const printError = function(error) {
+const printError = function (error) {
   console.error(`ERROR: ${JSON.stringify(error)}`);
 };
 
@@ -77,10 +77,7 @@ lfm.tag_getTopTags({
   },
 });
 
-lfm
-  .tag_getTopTags()
-  .then(printRes)
-  .catch(printError);
+lfm.tag_getTopTags().then(printRes).catch(printError);
 
 lfm.tag_getTopTracks({
   tag: 'Musical',

@@ -1,21 +1,21 @@
-import { LastFmRequest } from './sharedFunctions';
 import {
-  LastFmArtistCorrections,
-  LastFmArtist,
-  LastFmArtists,
-  LastFmTags,
   LastFmAlbums,
-  LastFmTracks,
+  LastFmArtist,
+  LastFmArtistCorrections,
+  LastFmArtists,
   LastFmSearch,
+  LastFmTags,
+  LastFmTracks,
 } from './lastFMNatives';
 import { Search, SearchType } from './searchFunctions';
+import { LastFmRequest } from './sharedFunctions';
 
 interface ArtistRequest<R> extends LastFmRequest<R> {
   artist: string;
 }
 
-export type MBIDArtist<R = {}> = Omit<ArtistRequest<R>, 'method' | 'artist'> & { mbid: string };
-export type NamedArtist<R = {}> = Omit<ArtistRequest<R>, 'method'>;
+export type MBIDArtist<R = Record<string, unknown>> = Omit<ArtistRequest<R>, 'method' | 'artist'> & { mbid: string };
+export type NamedArtist<R = Record<string, unknown>> = Omit<ArtistRequest<R>, 'method'>;
 type ArtistGet<R> = MBIDArtist<R> | NamedArtist<R>;
 
 export type ArtistGetInfoRes = LastFmArtist;

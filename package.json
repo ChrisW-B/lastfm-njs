@@ -1,56 +1,71 @@
 {
   "name": "lastfm-njs",
-  "description": "A complete last.fm API for Node.JS",
   "version": "1.0.0",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/ChrisW-B/lastfm-njs.git"
-  },
-  "author": "Chris Barry <me@chrisb.xyz>",
-  "main": "lib/index.js",
-  "directories": {
-    "example": "examples"
-  },
-  "engines": {
-    "node": "*"
-  },
-  "devDependencies": {
-    "@types/request-promise-native": "^1.0.17",
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
-    "@typescript-eslint/parser": "^2.33.0",
-    "@typescript-eslint/typescript-estree": "^2.33.0",
-    "eslint": "^7.0.0",
-    "eslint-config-airbnb-base": "^14.1.0",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-import-resolver-typescript": "^2.0.0",
-    "eslint-import-resolver-webpack": "^0.12.1",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.3",
-    "prettier": "^2.0.5",
-    "tsdx": "^0.13.2",
-    "typescript": "^3.9.2"
-  },
-  "optionalDependencies": {},
-  "bugs": {
-    "url": "https://github.com/ChrisW-B/lastfm-njs/issues"
-  },
-  "homepage": "https://github.com/ChrisW-B/lastfm-njs#readme",
+  "description": "A complete last.fm API for Node.JS",
   "keywords": [
     "lastfm",
     "music"
   ],
+  "homepage": "https://github.com/ChrisW-B/lastfm-njs#readme",
+  "bugs": {
+    "url": "https://github.com/ChrisW-B/lastfm-njs/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ChrisW-B/lastfm-njs.git"
+  },
   "license": "ISC",
-  "dependencies": {
-    "request-promise-native": "^1.0.8"
+  "author": "Chris Barry <me@chrisb.xyz>",
+  "main": "lib/index.js",
+  "directories": {
+    "example": "examples"
   },
   "scripts": {
     "build": "tsdx build",
     "clean": "rm -rf ./build",
     "lint:js": "eslint \"./lib/**/*.{t,j}s{x,}\" --ignore-pattern 'build/**/*.js'",
     "lint:js:fix": "npm run lint:js -- --fix",
-    "prettier": "prettier './lib/**/*.{ts,js,jsx,tsx,gql,html,yml,json}' --write",
+    "prettier": "prettier './**/*.{ts,js,jsx,tsx,gql,html,yml,json}' --write",
     "prettier:check": "prettier './src/**/*.{ts,js,jsx,tsx,gql,html,yml,json}' -c",
     "typescript": "tsc --noEmit"
+  },
+  "dependencies": {
+    "import-sort": "^6.0.0",
+    "import-sort-parser-typescript": "^6.0.0",
+    "request-promise-native": "^1.0.9"
+  },
+  "devDependencies": {
+    "@types/request-promise-native": "^1.0.17",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "@typescript-eslint/typescript-estree": "^4.15.1",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-import-resolver-typescript": "^2.4.0",
+    "eslint-import-resolver-webpack": "^0.13.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "import-sort-style-module": "^6.0.0",
+    "prettier": "^2.2.1",
+    "prettier-plugin-import-sort": "0.0.6",
+    "prettier-plugin-packagejson": "^2.2.10",
+    "tsdx": "^0.14.1",
+    "typescript": "^4.1.5"
+  },
+  "optionalDependencies": {},
+  "engines": {
+    "node": "*"
+  },
+  "importSort": {
+    ".js, .jsx, .es6, .es": {
+      "parser": "babylon",
+      "style": "module"
+    },
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "module"
+    }
   }
 }

@@ -1,25 +1,19 @@
-import rp, { Options } from 'request-promise-native';
 import crypto from 'crypto';
-import {
-  ErrorMessage,
-  LastFmConstructor,
-  ResponseData,
-  LastFmRequest,
-  PostRequest,
-  CallbackFunc,
-} from './dataModel/sharedFunctions';
+
+import rp, { Options } from 'request-promise-native';
+
 import {
   AlbumAddTags,
   AlbumGetInfo,
-  AlbumInfoRes,
-  NamedAlbum,
-  MBIDAlbum,
-  AlbumTagsRes,
-  AlbumRemoveTag,
-  AlbumSearchRes,
-  AlbumSearch,
   AlbumGetTags,
   AlbumGetTopTags,
+  AlbumInfoRes,
+  AlbumRemoveTag,
+  AlbumSearch,
+  AlbumSearchRes,
+  AlbumTagsRes,
+  MBIDAlbum,
+  NamedAlbum,
 } from './dataModel/albumFunctions';
 import {
   ArtistAddTags,
@@ -27,10 +21,8 @@ import {
   ArtistGetCorrectionRes,
   ArtistGetInfo,
   ArtistGetInfoRes,
-  NamedArtist,
-  MBIDArtist,
-  ArtistGetSimilarRes,
   ArtistGetSimilar,
+  ArtistGetSimilarRes,
   ArtistGetTags,
   ArtistGetTagsRes,
   ArtistGetTopAlbums,
@@ -42,7 +34,10 @@ import {
   ArtistRemoveTag,
   ArtistSearch,
   ArtistSearchRes,
+  MBIDArtist,
+  NamedArtist,
 } from './dataModel/artistFunctions';
+import { ErrorMessage, LastFmConstructor, LastFmRequest, PostRequest, ResponseData } from './dataModel/sharedFunctions';
 
 export default class LastFm {
   private debug: boolean;
@@ -76,14 +71,10 @@ export default class LastFm {
     }
   }
 
-  private static _sendErr(msg: string, callback?: CallbackFunc): null | Promise<ErrorMessage> {
+  private static _sendErr(msg: string): Promise<ErrorMessage> {
     // handles error checking within library,
     // whether using callbacks or promises
     const errMsg: ErrorMessage = { error: 6, message: msg, success: false };
-    if (callback) {
-      callback({ ...errMsg });
-      return null;
-    }
     return new Promise((_, reject) => {
       reject(errMsg);
     });
@@ -109,7 +100,9 @@ export default class LastFm {
     return crypto.createHash('md5').update(sig, 'utf8').digest('hex');
   }
 
-  private _getData<Response = {}>(params: LastFmRequest<Response>): Promise<Record<string, ResponseData<Response>>> {
+  private _getData<Response = Record<string, unknown>>(
+    params: LastFmRequest<Response>,
+  ): Promise<Record<string, ResponseData<Response>>> {
     return new Promise((resolve, reject) => {
       rp({
         method: 'GET',
@@ -118,14 +111,16 @@ export default class LastFm {
         qs: { ...params, api_key: this.apiKey, format: 'json' },
       })
         .then((res: Record<string, ResponseData<Response>>) => (res.error ? reject(res) : resolve(res)))
-        .catch((err) => {
-          if (this.debug) console.log(`Exception: ${err}`);
+        .catch((err: ErrorMessage) => {
+          if (this.debug) console.log(`Exception: ${err.message}`);
           reject({ success: false, error: err });
         });
     });
   }
 
-  private _postData<Response = {}>(params: LastFmRequest<Response>): Promise<ResponseData<Response>> {
+  private _postData<Response = Record<string, unknown>>(
+    params: LastFmRequest<Response>,
+  ): Promise<ResponseData<Response>> {
     return new Promise((resolve, reject) => {
       const qs: PostRequest<Response> = {
         ...params,
@@ -139,29 +134,17 @@ export default class LastFm {
       const opt: Options = { uri: 'https://ws.audioscrobbler.com/2.0/', qs, json: true };
       rp.post(opt)
         .then((res) => resolve(res))
-        .catch((err) => {
-          if (this.debug) console.log(`Exception: ${err}`);
+        .catch((err: ErrorMessage) => {
+          if (this.debug) console.log(`Exception: ${err.message}`);
           reject({ success: false, err });
         });
     });
   }
 
-  private _get<Response = {}>(
+  private _get<Response = Record<string, unknown>>(
     qs: LastFmRequest<Response>,
     name: string,
-    callback?: CallbackFunc<Response>,
   ): Promise<ResponseData<Response>> {
-    if (callback) {
-      this._getData<Response>(qs)
-        .then((res) => {
-          res[name].success = true;
-          callback({ ...res[name], success: true });
-        })
-        .catch((err) => {
-          callback(err);
-        });
-      return null;
-    }
     return new Promise((resolve, reject) => {
       this._getData<Response>(qs)
         .then((res) => {
@@ -173,42 +156,19 @@ export default class LastFm {
     });
   }
 
-  private _post<Response = { success: boolean }>(
-    qs: LastFmRequest<Response>,
-    callback?: CallbackFunc<Response>,
-  ): Promise<Response> | null {
-    if (callback) {
-      this._postData<Response>(qs)
-        .then((res) => callback?.({ ...res, success: true }))
-        .catch((err) => callback?.({ ...err, success: false }));
-      return null;
-    }
+  private _post<Response = { success: boolean }>(qs: LastFmRequest<Response>): Promise<Response> {
     return this._postData<Response>(qs);
   }
 
-  public async auth_getMobileSession(
-    callback?: CallbackFunc<{ key: string }>,
-  ): Promise<{ key: string; success: boolean } | ErrorMessage> {
-    const self = this;
+  public async auth_getMobileSession(): Promise<{ key: string; success: boolean } | ErrorMessage> {
     const qs = {
       method: 'auth.getMobileSession',
       username: this.username,
       password: this.password,
     };
     try {
-      if (callback) {
-        self
-          ._postData<{ session: { key: string; success: true } }>(qs)
-          .then((res) => {
-            self.sessionKey = res.session.key;
-            return callback(res.session);
-          })
-          .catch((err) => {
-            return LastFm._sendErr(err, callback);
-          });
-      }
       const res = await this._postData<{ session: { key: string; success: boolean } }>(qs);
-      self.sessionKey = res.session.key;
+      this.sessionKey = res.session.key;
       return res.session;
     } catch (e) {
       return LastFm._sendErr(e);
@@ -226,10 +186,10 @@ export default class LastFm {
       qs.tags === '' ||
       qs.tags === undefined
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
 
-    return this._post({ ...qs, method: 'album.addTags' }, qs.callback);
+    return this._post({ ...qs, method: 'album.addTags' });
   }
 
   album_getInfo(qs: AlbumGetInfo) {
@@ -241,9 +201,9 @@ export default class LastFm {
         (qs as NamedAlbum).album === undefined) &&
         ((qs as MBIDAlbum).mbid === '' || (qs as MBIDAlbum).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._get<AlbumInfoRes>({ ...qs, method: 'album.getInfo', autocorrect: 1 }, 'album', qs.callback);
+    return this._get<AlbumInfoRes>({ ...qs, method: 'album.getInfo', autocorrect: 1 }, 'album');
   }
 
   album_getTags(qs: AlbumGetTags) {
@@ -255,9 +215,9 @@ export default class LastFm {
         (qs as NamedAlbum).album === undefined) &&
         ((qs as MBIDAlbum).mbid === '' || (qs as MBIDAlbum).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._get<AlbumTagsRes>({ ...qs, method: 'album.getTags', autocorrect: 1 }, 'tags', qs.callback);
+    return this._get<AlbumTagsRes>({ ...qs, method: 'album.getTags', autocorrect: 1 }, 'tags');
   }
 
   album_getTopTags(qs: AlbumGetTopTags) {
@@ -269,9 +229,9 @@ export default class LastFm {
         (qs as NamedAlbum).album === undefined) &&
         ((qs as MBIDAlbum).mbid === '' || (qs as MBIDAlbum).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._get<AlbumTagsRes>({ ...qs, method: 'album.getTopTags', autocorrect: 1 }, 'toptags', qs.callback);
+    return this._get<AlbumTagsRes>({ ...qs, method: 'album.getTopTags', autocorrect: 1 }, 'toptags');
   }
 
   album_removeTag(qs: AlbumRemoveTag) {
@@ -283,31 +243,31 @@ export default class LastFm {
       qs.tag === '' ||
       qs.tag === undefined
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._post({ ...qs, method: 'album.removeTag' }, qs.callback);
+    return this._post({ ...qs, method: 'album.removeTag' });
   }
 
   album_search(qs: AlbumSearch) {
     if (!qs || qs.album === '' || qs.album === undefined) {
-      return LastFm._sendErr('Missing album param', qs.callback);
+      return LastFm._sendErr('Missing album param');
     }
-    return this._get<AlbumSearchRes>({ ...qs, method: 'album.search', autocorrect: 1 }, 'results', qs.callback);
+    return this._get<AlbumSearchRes>({ ...qs, method: 'album.search', autocorrect: 1 }, 'results');
   }
 
   // Artist methods
   artist_addTags(qs: ArtistAddTags) {
     if (qs.artist === '' || qs.artist === undefined || qs.tags === '' || qs.tags === undefined) {
-      return LastFm._sendErr('Missing required parameters', qs.callback);
+      return LastFm._sendErr('Missing required parameters');
     }
-    return this._post({ ...qs, method: 'artist.addTags' }, qs.callback);
+    return this._post({ ...qs, method: 'artist.addTags' });
   }
 
   artist_getCorrection(qs: ArtistGetCorrection) {
     if (qs.artist === '' || qs.artist === undefined) {
-      return LastFm._sendErr('Missing Artist', qs.callback);
+      return LastFm._sendErr('Missing Artist');
     }
-    return this._get<ArtistGetCorrectionRes>({ ...qs, method: 'artist.getCorrection' }, 'corrections', qs.callback);
+    return this._get<ArtistGetCorrectionRes>({ ...qs, method: 'artist.getCorrection' }, 'corrections');
   }
 
   artist_getInfo(qs: ArtistGetInfo) {
@@ -316,10 +276,10 @@ export default class LastFm {
       (((qs as NamedArtist).artist === '' || (qs as NamedArtist).artist === undefined) &&
         ((qs as MBIDArtist).mbid === '' || (qs as MBIDArtist).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
 
-    return this._get<ArtistGetInfoRes>({ ...qs, method: 'artist.getInfo', autocorrect: 1 }, 'artist', qs.callback);
+    return this._get<ArtistGetInfoRes>({ ...qs, method: 'artist.getInfo', autocorrect: 1 }, 'artist');
   }
 
   artist_getSimilar(qs: ArtistGetSimilar) {
@@ -328,7 +288,7 @@ export default class LastFm {
       (((qs as NamedArtist).artist === '' || (qs as NamedArtist).artist === undefined) &&
         ((qs as MBIDArtist).mbid === '' || (qs as MBIDArtist).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
     return this._get<ArtistGetSimilarRes>(
       { ...qs, method: 'artist.getSimilar', autocorrect: 1 },
@@ -344,9 +304,9 @@ export default class LastFm {
       qs.user === '' ||
       qs.user === undefined
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
-    return this._get<ArtistGetTagsRes>({ ...qs, method: 'artist.getTags', autocorrect: 1 }, 'tags', qs.callback);
+    return this._get<ArtistGetTagsRes>({ ...qs, method: 'artist.getTags', autocorrect: 1 }, 'tags');
   }
 
   artist_getTopAlbums(qs: ArtistGetTopAlbums) {
@@ -355,7 +315,7 @@ export default class LastFm {
       (((qs as NamedArtist).artist === '' || (qs as NamedArtist).artist === undefined) &&
         ((qs as MBIDArtist).mbid === '' || (qs as MBIDArtist).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
     return this._get<ArtistGetTopAlbumsRes>(
       { ...qs, method: 'artist.getTopAlbums', autocorrect: 1 },
@@ -370,7 +330,7 @@ export default class LastFm {
       (((qs as NamedArtist).artist === '' || (qs as NamedArtist).artist === undefined) &&
         ((qs as MBIDArtist).mbid === '' || (qs as MBIDArtist).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
     return this._get<ArtistGetTopTagsRes>(
       { ...qs, method: 'artist.getTopTags', autocorrect: 1 },
@@ -385,7 +345,7 @@ export default class LastFm {
       (((qs as NamedArtist).artist === '' || (qs as NamedArtist).artist === undefined) &&
         ((qs as MBIDArtist).mbid === '' || (qs as MBIDArtist).mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
     return this._get<ArtistGetTopTracksRes>(
       { ...qs, method: 'artist.getTopTracks', autocorrect: 1 },
@@ -396,119 +356,119 @@ export default class LastFm {
 
   artist_removeTag(qs: ArtistRemoveTag) {
     if (qs.artist === '' || qs.artist === undefined || qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('Missing required parameters', qs.callback);
+      return LastFm._sendErr('Missing required parameters');
     }
-    return this._post({ ...qs, method: 'artist.removeTag' }, qs.callback);
+    return this._post({ ...qs, method: 'artist.removeTag' });
   }
 
   artist_search(qs: ArtistSearch) {
     if (qs.artist === '' || qs.artist === undefined) {
-      return LastFm._sendErr('Missing artist to search', qs.callback);
+      return LastFm._sendErr('Missing artist to search');
     }
-    return this._get<ArtistSearchRes>({ ...qs, method: 'artist.search', autocorrect: 1 }, 'results', qs.callback);
+    return this._get<ArtistSearchRes>({ ...qs, method: 'artist.search', autocorrect: 1 }, 'results');
   }
 
   // Chart Methods
   chart_getTopArtists(opt) {
     const qs = opt || {};
-    return this._get({ ...qs, method: 'chart.getTopArtists', autocorrect: 1 }, 'artists', qs.callback);
+    return this._get({ ...qs, method: 'chart.getTopArtists', autocorrect: 1 }, 'artists');
   }
 
   chart_getTopTags(opt) {
     const qs = opt || {};
-    return this._get({ ...qs, method: 'chart.getTopTags', autocorrect: 1 }, 'tags', qs.callback);
+    return this._get({ ...qs, method: 'chart.getTopTags', autocorrect: 1 }, 'tags');
   }
 
   chart_getTopTracks(opt) {
     const qs = opt || {};
-    return this._get({ ...qs, method: 'chart.getTopTracks', autocorrect: 1 }, 'tracks', qs.callback);
+    return this._get({ ...qs, method: 'chart.getTopTracks', autocorrect: 1 }, 'tracks');
   }
 
   // Geo Methods
   geo_getTopArtists(opt) {
     const qs = opt || {};
     if (qs.country === '' || qs.country === undefined) {
-      return LastFm._sendErr('Missing country', qs.callback);
+      return LastFm._sendErr('Missing country');
     }
-    return this._get({ ...qs, method: 'geo.getTopArtists', autocorrect: 1 }, 'topartists', qs.callback);
+    return this._get({ ...qs, method: 'geo.getTopArtists', autocorrect: 1 }, 'topartists');
   }
 
   geo_getTopTracks(opt) {
     const qs = opt || {};
     if (qs.country === '' || qs.country === undefined) {
-      return LastFm._sendErr('Missing country', qs.callback);
+      return LastFm._sendErr('Missing country');
     }
-    return this._get({ ...qs, method: 'geo.getTopTracks', autocorrect: 1 }, 'tracks', qs.callback);
+    return this._get({ ...qs, method: 'geo.getTopTracks', autocorrect: 1 }, 'tracks');
   }
 
   // Library Methods
   library_getArtists(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
-      return LastFm._sendErr('Missing username', qs.callback);
+      return LastFm._sendErr('Missing username');
     }
-    return this._get({ ...qs, method: 'library.getArtists', autocorrect: 1 }, 'artists', qs.callback);
+    return this._get({ ...qs, method: 'library.getArtists', autocorrect: 1 }, 'artists');
   }
 
   // Tag Methods
   tag_getInfo(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('No tag given', qs.callback);
+      return LastFm._sendErr('No tag given');
     }
     qs.method = 'tag.getInfo';
-    return this._get(qs, 'tag', qs.callback);
+    return this._get(qs, 'tag');
   }
 
   tag_getSimilar(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('No tag given', qs.callback);
+      return LastFm._sendErr('No tag given');
     }
     qs.method = 'tag.getSimilar';
-    return this._get(qs, 'similartags', qs.callback);
+    return this._get(qs, 'similartags');
   }
 
   tag_getTopAlbums(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('No tag given', qs.callback);
+      return LastFm._sendErr('No tag given');
     }
     qs.method = 'tag.getTopAlbums';
-    return this._get(qs, 'albums', qs.callback);
+    return this._get(qs, 'albums');
   }
 
   tag_getTopArtists(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('No tag given', qs.callback);
+      return LastFm._sendErr('No tag given');
     }
     qs.method = 'tag.getTopArtists';
-    return this._get(qs, 'topartists', qs.callback);
+    return this._get(qs, 'topartists');
   }
 
   tag_getTopTags(opt) {
     const qs = opt || {};
     qs.method = 'tag.getTopTags';
-    return this._get(qs, 'toptags', qs.callback);
+    return this._get(qs, 'toptags');
   }
 
   tag_getTopTracks(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('No tag given', qs.callback);
+      return LastFm._sendErr('No tag given');
     }
     qs.method = 'tag.getTopTracks';
-    return this._get(qs, 'tracks', qs.callback);
+    return this._get(qs, 'tracks');
   }
 
   tag_getWeeklyChartList(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('No tag given', qs.callback);
+      return LastFm._sendErr('No tag given');
     }
     qs.method = 'tag.getWeeklyChartList';
-    return this._get(qs, 'weeklychartlist', qs.callback);
+    return this._get(qs, 'weeklychartlist');
   }
 
   // Track methods
@@ -522,19 +482,19 @@ export default class LastFm {
       qs.tags === '' ||
       qs.tags === undefined
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
     qs.method = 'track.addTags';
-    return this._post(qs, qs.callback);
+    return this._post(qs);
   }
 
   track_getCorrection(opt) {
     const qs = opt || {};
     if (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
     qs.method = 'track.getCorrection';
-    return this._get(qs, 'corrections', qs.callback);
+    return this._get(qs, 'corrections');
   }
 
   track_getInfo(opt) {
@@ -543,9 +503,9 @@ export default class LastFm {
       (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) &&
       (qs.mbid === '' || qs.mbid === undefined)
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._get({ ...qs, method: 'track.getInfo', autocorrect: 1 }, 'track', qs.callback);
+    return this._get({ ...qs, method: 'track.getInfo', autocorrect: 1 }, 'track');
   }
 
   track_getSimilar(opt) {
@@ -554,9 +514,9 @@ export default class LastFm {
       (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) &&
       (qs.mbid === '' || qs.mbid === undefined)
     ) {
-      return LastFm._sendErr('Missing both artist and mbid', qs.callback);
+      return LastFm._sendErr('Missing both artist and mbid');
     }
-    return this._get({ ...qs, method: 'track.getSimilar', autocorrect: 1 }, 'similartracks', qs.callback);
+    return this._get({ ...qs, method: 'track.getSimilar', autocorrect: 1 }, 'similartracks');
   }
 
   track_getTags(opt) {
@@ -567,9 +527,9 @@ export default class LastFm {
       ((qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) &&
         (qs.mbid === '' || qs.mbid === undefined))
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._get({ ...qs, method: 'track.getTags', autocorrect: 1 }, 'tags', qs.callback);
+    return this._get({ ...qs, method: 'track.getTags', autocorrect: 1 }, 'tags');
   }
 
   track_getTopTags(opt) {
@@ -578,17 +538,17 @@ export default class LastFm {
       (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) &&
       (qs.mbid === '' || qs.mbid === undefined)
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._get({ ...qs, method: 'track.getTopTags', autocorrect: 1 }, 'toptags', qs.callback);
+    return this._get({ ...qs, method: 'track.getTopTags', autocorrect: 1 }, 'toptags');
   }
 
   track_love(opt: PostRequest & { artist: string; track: string }) {
     const qs = opt || {};
     if (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
-    return this._post({ ...qs, method: 'track.love' }, qs.callback);
+    return this._post({ ...qs, method: 'track.love' });
   }
 
   track_removeTag(opt) {
@@ -601,10 +561,10 @@ export default class LastFm {
       qs.tag === '' ||
       qs.tag === undefined
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
     qs.method = 'track.removeTag';
-    return this._post(qs, qs.callback);
+    return this._post(qs);
   }
 
   track_scrobble(opt) {
@@ -617,210 +577,210 @@ export default class LastFm {
       qs.timestamp === '' ||
       qs.timestamp === undefined
     ) {
-      return LastFm._sendErr('Missing required params', qs.callback);
+      return LastFm._sendErr('Missing required params');
     }
     qs.method = 'track.scrobble';
-    return this._post(qs, qs.callback);
+    return this._post(qs);
   }
 
   track_search(opt) {
     const qs = opt || {};
     if (qs.track === '' || qs.track === undefined) {
-      return LastFm._sendErr('Missing track for search', qs.callback);
+      return LastFm._sendErr('Missing track for search');
     }
-    return this._get({ ...qs, method: 'track.search', autocorrect: 1 }, 'results', qs.callback);
+    return this._get({ ...qs, method: 'track.search', autocorrect: 1 }, 'results');
   }
 
   track_unlove(opt) {
     const qs = opt || {};
     if (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) {
-      return LastFm._sendErr('Missing track or artist', qs.callback);
+      return LastFm._sendErr('Missing track or artist');
     }
     qs.method = 'track.unlove';
-    return this._post(qs, qs.callback);
+    return this._post(qs);
   }
 
   track_updateNowPlaying(opt) {
     const qs = opt || {};
     if (qs.artist === '' || qs.artist === undefined || qs.track === '' || qs.track === undefined) {
-      return LastFm._sendErr('Missing track or artist', qs.callback);
+      return LastFm._sendErr('Missing track or artist');
     }
     qs.method = 'track.updateNowPlaying';
-    return this._post(qs, qs.callback);
+    return this._post(qs);
   }
 
   // User Methods
   user_getArtistTracks(opt) {
     const qs = opt || {};
     if (qs.artist === '' || qs.artist === undefined) {
-      return LastFm._sendErr('Missing artist', qs.callback);
+      return LastFm._sendErr('Missing artist');
     }
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getArtistTracks';
-    return this._get(qs, 'artisttracks', qs.callback);
+    return this._get(qs, 'artisttracks');
   }
 
   user_getFriends(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getFriends';
-    return this._get(qs, 'friends', qs.callback);
+    return this._get(qs, 'friends');
   }
 
   user_getInfo(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getInfo';
-    return this._get(qs, 'user', qs.callback);
+    return this._get(qs, 'user');
   }
 
   user_getLovedTracks(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getLovedTracks';
-    return this._get(qs, 'lovedtracks', qs.callback);
+    return this._get(qs, 'lovedtracks');
   }
 
   user_getPersonalTags(opt) {
     const qs = opt || {};
     if (qs.tag === '' || qs.tag === undefined) {
-      return LastFm._sendErr('Missing tag', qs.callback);
+      return LastFm._sendErr('Missing tag');
     }
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getPersonalTags';
-    return this._get(qs, 'taggings', qs.callback);
+    return this._get(qs, 'taggings');
   }
 
   user_getRecentTracks(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getRecentTracks';
-    return this._get(qs, 'recenttracks', qs.callback);
+    return this._get(qs, 'recenttracks');
   }
 
   user_getTopAlbums(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getTopAlbums';
-    return this._get(qs, 'topalbums', qs.callback);
+    return this._get(qs, 'topalbums');
   }
 
   user_getTopArtists(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getTopArtists';
-    return this._get(qs, 'topartists', qs.callback);
+    return this._get(qs, 'topartists');
   }
 
   user_getTopTags(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getTopTags';
-    return this._get(qs, 'toptags', qs.callback);
+    return this._get(qs, 'toptags');
   }
 
   user_getTopTracks(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getTopTracks';
-    return this._get(qs, 'toptracks', qs.callback);
+    return this._get(qs, 'toptracks');
   }
 
   user_getWeeklyAlbumChart(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getWeeklyAlbumChart';
-    return this._get(qs, 'weeklyalbumchart', qs.callback);
+    return this._get(qs, 'weeklyalbumchart');
   }
 
   user_getWeeklyArtistChart(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getWeeklyArtistChart';
-    return this._get(qs, 'weeklyartistchart', qs.callback);
+    return this._get(qs, 'weeklyartistchart');
   }
 
   user_getWeeklyChartList(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getWeeklyChartList';
-    return this._get(qs, 'weeklychartlist', qs.callback);
+    return this._get(qs, 'weeklychartlist');
   }
 
   user_getWeeklyTrackChart(opt) {
     const qs = opt || {};
     if (qs.user === '' || qs.user === undefined) {
       if (this.username === '' || this.username === undefined) {
-        return LastFm._sendErr('Missing user', qs.callback);
+        return LastFm._sendErr('Missing user');
       }
       qs.user = this.username;
     }
     qs.method = 'user.getWeeklyTrackChart';
-    return this._get(qs, 'weeklytrackchart', qs.callback);
+    return this._get(qs, 'weeklytrackchart');
   }
 }

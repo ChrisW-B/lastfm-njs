@@ -8,14 +8,14 @@ const lfm = new LastFm({
   password: config.password,
 });
 
-const printRes = function(res) {
+const printRes = function (res) {
   console.log(res);
 };
-const printError = function(error) {
+const printError = function (error) {
   console.error(`ERROR: ${JSON.stringify(error)}`);
 };
 
-lfm.auth_getMobileSession(res => {
+lfm.auth_getMobileSession((res) => {
   if (res.success) {
     lfm.track_addTags({
       artist: 'Bad Bad Hats',

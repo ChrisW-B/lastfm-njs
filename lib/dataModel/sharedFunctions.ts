@@ -13,11 +13,11 @@ export interface LastFmConstructor {
   sessionKey?: string;
 }
 
-export type ResponseData<R = {}> = R & {
+export type ResponseData<R = Record<string, unknown>> = R & {
   success: true;
 };
 
-export type CallbackFunc<R = {}> = (result: ErrorMessage | ResponseData<R>) => void;
+export type CallbackFunc<R = Record<string, unknown>> = (result: ErrorMessage | ResponseData<R>) => void;
 
 export interface LastFmRequest<R> {
   method: string;

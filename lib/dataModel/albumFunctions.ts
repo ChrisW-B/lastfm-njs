@@ -1,10 +1,6 @@
-import { LastFmAlbum, LastFmTags, LastFmAlbums, LastFmSearch } from './lastFMNatives';
-import { LastFmRequest } from './sharedFunctions';
+import { LastFmAlbum, LastFmAlbums, LastFmSearch, LastFmTags } from './lastFMNatives';
 import { Search, SearchType } from './searchFunctions';
-
-export type MBIDAlbum<R = {}> = Omit<AlbumRequest<R>, 'method' | 'artist' | 'album'> & { mbid: string };
-export type NamedAlbum<R = {}> = Omit<AlbumRequest<R>, 'method'>;
-type AlbumGet<R> = MBIDAlbum<R> | NamedAlbum<R>;
+import { LastFmRequest } from './sharedFunctions';
 
 interface AlbumRequest<R> extends LastFmRequest<R> {
   artist: string;
@@ -19,6 +15,13 @@ export interface AlbumTagsRes extends LastFmTags {
     album: string;
   };
 }
+
+export type MBIDAlbum<R = Record<string, unknown>> = Omit<AlbumRequest<R>, 'method' | 'artist' | 'album'> & {
+  mbid: string;
+};
+export type NamedAlbum<R = Record<string, unknown>> = Omit<AlbumRequest<R>, 'method'>;
+type AlbumGet<R> = MBIDAlbum<R> | NamedAlbum<R>;
+
 export interface AlbumSearchRes extends LastFmSearch {
   albummatches: LastFmAlbums;
 }
